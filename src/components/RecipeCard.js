@@ -12,15 +12,15 @@ export const RecipeCard = ({
       <h2>{name}</h2>
       <div style={{ display: 'flex', gap: 8 }}>
         <div>
-          <BsAlarm />
+          <BsAlarm size="24" />
           {time} min
         </div>
         <div>
-          <AiOutlinePieChart />
+          <AiOutlinePieChart size="24" />
           {servings} servings
         </div>
         <div>
-          <HiOutlineChartBar />
+          <HiOutlineChartBar size="24" />
           {calories} calories
         </div>
       </div>
