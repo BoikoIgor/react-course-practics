@@ -19,6 +19,18 @@ import { Component } from 'react';
 import { ImageModal } from 'components/ImageModal/ImageModal';
 
 export class RecipeCard extends Component {
+  static propTypes = {
+    onDelete: PropTypes.func.isRequired,
+    item: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      time: PropTypes.string.isRequired,
+      servings: PropTypes.number.isRequired,
+      calories: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      difficulty: PropTypes.oneOf(['easy', 'medium', 'hard']).isRequired,
+    }).isRequired,
+  };
   state = {
     selectedImg: null,
   };
@@ -94,15 +106,3 @@ export class RecipeCard extends Component {
     );
   }
 }
-
-RecipeCard.propTypes = {
-  item: PropTypes.shape({
-    // id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
-    servings: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    // difficulty: PropTypes.oneOf(['easy', 'medium', 'hard']).isRequired,
-  }).isRequired,
-};
