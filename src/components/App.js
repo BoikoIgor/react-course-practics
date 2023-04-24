@@ -1,26 +1,29 @@
 import { RecipeList } from './RecipeList/RecipeList';
-import recipes from '../recipes.json';
+import initialRecipies from '../recipes.json';
 import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './Layout/Layout';
+import { Component } from 'react';
 
-export const App = () => {
-  return (
-    <div
-      style={{
-        // height: '100vh',
-        // display: 'flex',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        fontSize: 16,
-        color: '#010101',
-      }}
-    >
-      <Layout>
-        <div>Recipe Form</div>
-        <RecipeList items={recipes} />
-        <div>Image modal</div>
-        <GlobalStyle />
-      </Layout>
-    </div>
-  );
-};
+export class App extends Component {
+  state = {
+    recipes: initialRecipies,
+  };
+  deleteRecipe = recipeId => {
+    this.setState(prevState => ({
+      recipes: prevState.recipes.filter(recipe => recipe.id !== recipeId),
+    }));
+  };
+
+  render() {
+    return (
+      <div>
+        <Layout>
+          <div>Recipe Form</div>
+          <RecipeList items={this.state.recipes} onDelete={this.deleteRecipe} />
+
+          <GlobalStyle />
+        </Layout>
+      </div>
+    );
+  }
+}
