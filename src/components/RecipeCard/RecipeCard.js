@@ -2,62 +2,98 @@ import PropTypes from 'prop-types';
 import { BsAlarm } from 'react-icons/bs';
 import { AiOutlinePieChart } from 'react-icons/ai';
 import { HiOutlineChartBar } from 'react-icons/hi';
+import { HiTrash, HiZoomIn } from 'react-icons/hi';
 import {
-  Name,
-  RecipeInfo,
+  Container,
   InfoBlock,
+  Name,
+  Image,
+  Meta,
+  RecipeInfo,
   BadgeList,
   Badge,
+  Actions,
 } from './RecipeCard.styled';
 import { RecipeDifficulty } from 'constans';
+import { Component } from 'react';
+import { ImageModal } from 'components/ImageModal/ImageModal';
 
-export const RecipeCard = ({
-  item: { name, image, time, servings, calories, difficulty },
-}) => {
-  return (
-    <section>
-      <img src={image} alt={name} width="240" />
-      <Name>{name}</Name>
-      <RecipeInfo>
-        <InfoBlock>
-          <BsAlarm size="24" />
-          <span>{time} min</span>
-        </InfoBlock>
-        <InfoBlock>
-          <AiOutlinePieChart size="24" />
-          <span>{servings} servings</span>
-        </InfoBlock>
-        <InfoBlock>
-          <HiOutlineChartBar size="24" />
-          <span>{calories} calories</span>
-        </InfoBlock>
-      </RecipeInfo>
-      <div>
-        <h3>Difficulty</h3>
-        <BadgeList>
-          <Badge
-            active={difficulty === RecipeDifficulty.easy}
-            type={RecipeDifficulty.easy}
-          >
-            Easy
-          </Badge>
-          <Badge
-            active={difficulty === RecipeDifficulty.medium}
-            type={RecipeDifficulty.medium}
-          >
-            Medium
-          </Badge>
-          <Badge
-            active={difficulty === RecipeDifficulty.hard}
-            type={RecipeDifficulty.hard}
-          >
-            Hard
-          </Badge>
-        </BadgeList>
-      </div>
-    </section>
-  );
-};
+export class RecipeCard extends Component {
+  state = {
+    selectedImg: null,
+  };
+  setSelectedImg = () => {
+    this.setState({ selectedImg: this.props.item.image });
+  };
+  closeModal = () => {
+    this.setState({ selectedImg: null });
+  };
+  render() {
+    const { selectedImg } = this.state;
+    const {
+      item: { id, name, image, time, servings, calories, difficulty },
+      onDelete,
+    } = this.props;
+    return (
+      <Container>
+        <Image src={image} alt={name} width="240" />
+        <Meta>
+          <Name>{name}</Name>
+          <RecipeInfo>
+            <InfoBlock>
+              <BsAlarm size="24" />
+              <span>{time} min</span>
+            </InfoBlock>
+            <InfoBlock>
+              <AiOutlinePieChart size="24" />
+              <span>{servings} servings</span>
+            </InfoBlock>
+            <InfoBlock>
+              <HiOutlineChartBar size="24" />
+              <span>{calories} calories</span>
+            </InfoBlock>
+          </RecipeInfo>
+
+          <BadgeList>
+            <Badge
+              active={difficulty === RecipeDifficulty.easy}
+              type={RecipeDifficulty.easy}
+            >
+              Easy
+            </Badge>
+            <Badge
+              active={difficulty === RecipeDifficulty.medium}
+              type={RecipeDifficulty.medium}
+            >
+              Medium
+            </Badge>
+            <Badge
+              active={difficulty === RecipeDifficulty.hard}
+              type={RecipeDifficulty.hard}
+            >
+              Hard
+            </Badge>
+          </BadgeList>
+
+          <Actions>
+            <button aria-label="Delete" onClick={() => onDelete(id)}>
+              <HiTrash />
+            </button>
+            <button aria-label="Zoom" onClick={this.setSelectedImg}>
+              <HiZoomIn />
+            </button>
+          </Actions>
+        </Meta>
+
+        <ImageModal
+          isOpen={selectedImg !== null}
+          onClose={this.closeModal}
+          image={selectedImg}
+        />
+      </Container>
+    );
+  }
+}
 
 RecipeCard.propTypes = {
   item: PropTypes.shape({
