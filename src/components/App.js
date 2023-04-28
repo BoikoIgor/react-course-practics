@@ -10,9 +10,9 @@ export class App extends Component {
     recipes: [],
   };
   componentDidMount() {
-    console.log('C did mount');
+    // console.log('C did mount');
     const savedRecipes = localStorage.getItem('recipes');
-    console.log(savedRecipes);
+    // console.log(savedRecipes);
     if (savedRecipes !== null) {
       this.setState({ recipes: JSON.parse(savedRecipes) });
     } else {
@@ -22,7 +22,7 @@ export class App extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log('prevState: ', prevState);
+    // console.log('prevState: ', prevState);
     if (prevState.recipes !== this.state.recipes) {
       localStorage.setItem('recipes', JSON.stringify(this.state.recipes));
     }
@@ -41,7 +41,7 @@ export class App extends Component {
   };
 
   render() {
-    console.log('rendering...');
+    // console.log('rendering...');
     return (
       <Layout>
         <RecipeForm onSave={this.addRecipe} />
