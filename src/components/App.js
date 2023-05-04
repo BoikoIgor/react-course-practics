@@ -2,7 +2,7 @@ import { RecipeList } from './RecipeList/RecipeList';
 import initialRecipies from '../recipes.json';
 import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './Layout/Layout';
-import { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RecipeForm } from 'RecipeForm/RecipeForm';
 
 // export class App extends Component {
