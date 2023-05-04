@@ -15,7 +15,7 @@ import {
   Actions,
 } from './RecipeCard.styled';
 import { RecipeDifficulty } from 'constans';
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import { ImageModal } from 'components/ImageModal/ImageModal';
 
 // export class RecipeCard extends Component {
