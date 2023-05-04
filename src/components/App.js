@@ -7,8 +7,26 @@ import { RecipeForm } from 'RecipeForm/RecipeForm';
 
 export class App extends Component {
   state = {
-    recipes: initialRecipies,
+    recipes: [],
   };
+  componentDidMount() {
+    // console.log('C did mount');
+    const savedRecipes = localStorage.getItem('recipes');
+    // console.log(savedRecipes);
+    if (savedRecipes !== null) {
+      this.setState({ recipes: JSON.parse(savedRecipes) });
+    } else {
+      this.setState({
+        recipes: initialRecipies,
+      });
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    // console.log('prevState: ', prevState);
+    if (prevState.recipes !== this.state.recipes) {
+      localStorage.setItem('recipes', JSON.stringify(this.state.recipes));
+    }
+  }
 
   addRecipe = newRecipe => {
     this.setState(prevState => ({
@@ -23,6 +41,7 @@ export class App extends Component {
   };
 
   render() {
+    // console.log('rendering...');
     return (
       <Layout>
         <RecipeForm onSave={this.addRecipe} />
